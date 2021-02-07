@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="tycho-py",
-    version="0.1.1",
+    version="0.1.2",
     author="SamHDev",
     author_email="sam.fucked.up@samh.dev",
     description="A python implementation of the Tycho binary format",
