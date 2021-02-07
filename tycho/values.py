@@ -49,6 +49,9 @@ class NumericalValue(Value):
     def __int__(self):
         return self.value
 
+    def __float__(self):
+        return float(self.value)
+
     def encode_body(self):
         return self.value.to_bytes(self.byte_size, "big", signed=self.signed)
 
@@ -112,6 +115,18 @@ class Float32(Value):
     def encode_body(self):
         return struct.pack('>f', self.value)
 
+    def __repr__(self):
+        return f"Float32({self.value})"
+
+    def __str__(self):
+        return str(self.value)
+
+    def __float__(self):
+        return self.value
+
+    def __int__(self):
+        return int(self.value)
+
 
 class Float64(Value):
     def __init__(self, value: float):
@@ -120,6 +135,18 @@ class Float64(Value):
 
     def encode_body(self):
         return struct.pack('>d', self.value)
+
+    def __repr__(self):
+        return f"Float64({self.value})"
+
+    def __str__(self):
+        return str(self.value)
+
+    def __float__(self):
+        return self.value
+
+    def __int__(self):
+        return int(self.value)
 
 
 class Char(Value):
@@ -139,9 +166,23 @@ class Char(Value):
     def __str__(self):
         return self.value
 
+    def __len__(self):
+        return len(self.value)
+
+    @property
+    def length(self) -> int:
+        return len(self.value)
+
+    @property
+    def byte_length(self) -> int:
+        return len(self.value.encode("utf-8"))
+
     def encode_body(self):
         data = self.value.encode("utf-8")
         return encode_length(len(data)) + data
+
+    def __iter__(self):
+        return self.value.__iter__()
 
 
 class String(Value):
@@ -155,6 +196,13 @@ class String(Value):
     def length(self) -> int:
         return len(self.value)
 
+    @property
+    def byte_length(self) -> int:
+        return len(self.value.encode("utf-8"))
+
+    def __len__(self):
+        return len(self.value)
+
     def __repr__(self):
         return "String(" + repr(self.value) + ")"
 
@@ -163,6 +211,9 @@ class String(Value):
 
     def encode_body(self):
         return encode_string(self.value)
+
+    def __iter__(self):
+        return self.value.__iter__()
 
 
 class Bytes(Value):
@@ -175,6 +226,7 @@ class Bytes(Value):
     @property
     def length(self) -> int:
         return len(self.value)
+
 
     @staticmethod
     def from_list(data: typing.Iterable[int]):
@@ -190,3 +242,9 @@ class Bytes(Value):
 
     def encode_body(self):
         return encode_length(len(self.value)) + self.value
+
+    def __len__(self):
+        return len(self.value)
+
+    def __iter__(self):
+        return self.value.__iter__()

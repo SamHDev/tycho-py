@@ -56,6 +56,9 @@ class Option(Element):
         else:
             return bytes([32])
 
+    def __bool__(self):
+        return self.is_some
+
 
 class Array(Element):
     def __init__(self, data: typing.List[Element]):
@@ -66,6 +69,12 @@ class Array(Element):
         for key in self.value:
             build += key.encode()
         return build
+
+    def __repr__(self):
+        return "Array(" + repr(self.value) + ")"
+
+    def __iter__(self):
+        return self.value.__iter__()
 
 
 class Structure(Element):
@@ -91,6 +100,9 @@ class Structure(Element):
             build += encode_string(key)
             build += value.encode()
         return build
+
+    def __iter__(self):
+        return self.value.items().__iter__()
 
 
 class Variant(Element):
@@ -137,6 +149,9 @@ class Map(Element):
             build += value.encode()
         return build
 
+    def __iter__(self):
+        return self.value.items().__iter__()
+
 
 class List(Element):
     def __init__(self, item_type: typing.Type[Value], data: typing.List[Value]):
@@ -155,3 +170,9 @@ class List(Element):
         for key in self.value:
             build += key.encode_body()
         return build
+
+    def __repr__(self):
+        return "List(" + repr(self.item_type) + ", " + repr(self.value) + ")"
+
+    def __iter__(self):
+        return self.value.__iter__()

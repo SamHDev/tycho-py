@@ -7,18 +7,18 @@ from typing import Optional, Type
 def serialise(t) -> Element:
     if isinstance(t, dict):
         if is_structure(t):
-            return Structure({str(key): serialise_value(value) for key, value in t.items()})
+            return Structure({str(key): serialise(value) for key, value in t.items()})
         map_type = find_array_type(t.keys())
         if map_type is None:
-            return Structure({str(key): serialise_value(value) for key, value in t.items()})
+            return Structure({str(key): serialise(value) for key, value in t.items()})
         else:
-            return Map(map_type, t)
+            return Map(map_type, {serialise_value(key): serialise(value) for key, value in t.items()})
     elif isinstance(t, list) or isinstance(t, tuple):
         list_type = find_array_type(t)
         if list_type is None:
-            return Array(list(t))
+            return Array([serialise(x) for x in list(t)])
         else:
-            return List(list_type, list(t))
+            return List(list_type, [serialise_value(x, typed=list_type) for x in list(t)])
     elif t is None:
         return Option(None)
     else:

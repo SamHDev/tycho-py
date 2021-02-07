@@ -10,14 +10,14 @@ A python implementation of the [tycho binary format](https://github.com/samhdev/
 
 
 ### Installation
-You can install using pip:
+You can install using [pip](https://pypi.org/project/tycho-py/):
 ```
 pip install tycho-py
 ```
 
 or add the following to your requirements file:
 ```
-tycho-py==0.1.0
+tycho-py==0.1.1
 ```
 
 Once installed, import the library:
