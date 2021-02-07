@@ -11,7 +11,7 @@ setuptools.setup(
     description="A python implementation of the Tycho binary format",
     long_description=readme,
     long_description_content_type="text/markdown",
-    url="https://github.com/samhdev/tychopy",
+    url="https://github.com/samhdev/tycho-py",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
