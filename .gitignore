@@ -1,2 +1,4 @@
 .idea
 dist
+tycho_py.egg-info
+build
