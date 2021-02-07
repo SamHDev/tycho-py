@@ -76,6 +76,9 @@ class Array(Element):
     def __iter__(self):
         return self.value.__iter__()
 
+    def __len__(self):
+        return self.value.__len__()
+
 
 class Structure(Element):
     def __init__(self, value: typing.Dict[str, Element]):
@@ -104,6 +107,9 @@ class Structure(Element):
     def __iter__(self):
         return self.value.items().__iter__()
 
+    def __len__(self):
+        return self.value.__len__()
+
 
 class Variant(Element):
     def __init__(self, name: str, value):
@@ -112,6 +118,9 @@ class Variant(Element):
 
     def __repr__(self):
         return "Variant(" + repr(self.name) + ", " + repr(self.value) + ")"
+
+    def __len__(self):
+        return self.value.__len__()
 
     def encode(self):
         return bytes([80]) + encode_string(self.name) + self.value.encode()
@@ -142,6 +151,9 @@ class Map(Element):
     def __repr__(self):
         return "Map(" + repr(self.key_type) + ", " + repr(self.value) + ")"
 
+    def __len__(self):
+        return self.value.__len__()
+
     def encode(self):
         build = bytes([80]) + encode_length(len(self.value))
         for key, value in self.value.items():
@@ -166,10 +178,13 @@ class List(Element):
             i += 1
 
     def encode(self):
-        build = bytes([80]) + encode_length(len(self.value))
+        build = bytes([112 + self.item_type(0).encode_prefix()]) + encode_length(len(self.value))
         for key in self.value:
             build += key.encode_body()
         return build
+
+    def __len__(self):
+        return self.value.__len__()
 
     def __repr__(self):
         return "List(" + repr(self.item_type) + ", " + repr(self.value) + ")"
