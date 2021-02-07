@@ -1,0 +1,13 @@
+setup.py
+tycho/__init__.py
+tycho/de.py
+tycho/decode.py
+tycho/elements.py
+tycho/length.py
+tycho/ser.py
+tycho/string.py
+tycho/values.py
+tycho_py.egg-info/PKG-INFO
+tycho_py.egg-info/SOURCES.txt
+tycho_py.egg-info/dependency_links.txt
+tycho_py.egg-info/top_level.txt
