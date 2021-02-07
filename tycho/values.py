@@ -34,7 +34,7 @@ class NumericalValue(Value):
         self.value = value
         self.byte_size = byte_size
         self.signed = signed
-        if _min >= value or _max <= value:
+        if _min > value or _max < value:
             raise ValueError(f"Value {value} is out of bounds ({_min}-{_max})")
 
     def __repr__(self):
