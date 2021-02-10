@@ -17,7 +17,7 @@ pip install tycho-py
 
 or add the following to your requirements file:
 ```
-tycho-py==0.1.2
+tycho-py==0.1.4
 ```
 
 Once installed, import the library:

@@ -7,7 +7,7 @@ def deserialise(s: Element) -> typing.Any:
     if isinstance(s, Unit):
         return None
     elif isinstance(s, Value):
-        return s.__getattribute__("value")
+        return deserialise_value(s)
     elif isinstance(s, Option):
         if s.is_none:
             return None
@@ -18,11 +18,11 @@ def deserialise(s: Element) -> typing.Any:
     elif isinstance(s, Structure):
         return {str(k): deserialise(e) for k, e in s.value.items()}
     elif isinstance(s, Variant):
-        return dict((s.name, deserialise(s.value)))
+        return dict([(s.name, deserialise(s.value))])
     elif isinstance(s, Map):
         return {deserialise_value(k): deserialise(e) for k, e in s.value.items()}
     elif isinstance(s, List):
-        return {deserialise_value(k) for k, e in s.value}
+        return [deserialise_value(e) for e in s.value]
 
 
 def deserialise_value(s: Value):
