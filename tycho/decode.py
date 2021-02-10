@@ -91,11 +91,11 @@ def decode_value(data: BytesIO, typed) -> Value:
         return Float32(struct.unpack(">f", data.read(4))[0])
     elif typed == 12:
         return Float32(struct.unpack(">d", data.read(8))[0])
-    elif typed == 13:
+    elif typed == 14:
         size = decode_length(data)
         s = data.read(size).decode("utf-8")
         return Char(s[0])
-    elif typed == 14:
+    elif typed == 13:
         return String(decode_string(data))
     elif typed == 15:
         size = decode_length(data)

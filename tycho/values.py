@@ -153,7 +153,7 @@ class Char(Value):
     value: str
 
     def __init__(self, value: str):
-        super().__init__(13)
+        super().__init__(14)
         self.value = value
 
     def validate(self, strict=True):
@@ -189,7 +189,7 @@ class String(Value):
     value: str
 
     def __init__(self, value: str):
-        super().__init__(14)
+        super().__init__(13)
         self.value = value
 
     @property
